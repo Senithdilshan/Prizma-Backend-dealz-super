@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+//------------------------------------------------------------Senith Start----------------------------------------------
+model batchNo{
+  id Int @id @default(autoincrement())
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
+  batchNo String @db.VarChar(255) @unique
+  ManufacturerBNo String @db.VarChar(255)
+  mfDate DateTime 
+  exDate DateTime
+  buyingPrice Float
+  sellingPrice Float
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stocks Stock[]
+  // grns GRN[]
+}
+// model GRN{
+//   id Int @id @default(autoincrement())
+//   grnID String @db.VarChar(20) @unique
+
+//   product product @relation(fields: [productId], references: [productId])
+//   productId String @db.VarChar(20)
+
+//   warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
+//   warehouseID String @db.VarChar(20)
+
+//   // suppiler Supplier @relation(fields: [supplierID], references: [supplierID])
+//   // supplierID String @db.VarChar(20)
+
+//   batch batchNo @relation(fields: [batchNo], references: [batchNo])
+//   batchNo String @db.VarChar(255)
+
+//   quantity Int
+//   totalBuyingPrice Float
+//   status String @db.VarChar(10) @default("active")
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model Stock{
+  id Int @id @default(autoincrement())
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
+  warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
+  warehouseID String @db.VarChar(20)
+  batch batchNo @relation(fields: [batchNo], references: [batchNo])
+  batchNo String @db.VarChar(255)
+  quantity Int
+  buyingPrice Float
+  sellingPrice Float
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model product{
+  id Int @id @default(autoincrement())
+  productId String @db.VarChar(20) @unique
+  barcode String @db.VarChar(50) @unique
+  productName String @db.VarChar(150)
+  createdAt DateTime @default(now())
+  status String @db.VarChar(10) @default("active")
+  updatedAt DateTime @updatedAt
+  batches batchNo[]
+  // grns GRN[]
+  stocks Stock[]
+}
+
+model warehouse{
+  id Int @id @default(autoincrement())
+  warehouseID String @db.VarChar(20) @unique
+  location String @db.VarChar(50)
+  createdAt DateTime @default(now())
+  status String @db.VarChar(10) @default("active")
+  updatedAt DateTime @updatedAt
+  // grns GRN[]
+  stocks Stock[]
+  
+}
