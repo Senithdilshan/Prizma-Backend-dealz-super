@@ -56,7 +56,7 @@ model Stock{
   warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
   warehouseID String @db.VarChar(20)
   batch batchNo @relation(fields: [batchNo], references: [batchNo])
-  batchNo String @db.VarChar(255)
+  batchNo String @db.VarChar(255) @unique
   quantity Int
   buyingPrice Float
   sellingPrice Float
