@@ -43,6 +43,23 @@ router.get("/", async (req: Request, res: Response) => {
     }
 });
 
+router.get("/:id", async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const batches = await prisma.batchNo.findMany(
+            {
+                where: {
+                    productId:id,
+                    status: 'active',
+                }
+            }
+        );
+        res.send(batches);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+
 router.put("/", async (req: Request, res: Response) => {
     try {
         const { productId, batchNo, ManufacturerBNo, mfDate, exDate, buyingPrice, sellingPrice } = req.body;
