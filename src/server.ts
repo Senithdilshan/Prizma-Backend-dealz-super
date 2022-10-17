@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express'
-import cors from 'cors'
+import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { PrismaClient } from "@prisma/client";
 import ProductRouter from './routers/Stock/product.router'
 import WarehouseRouter from './routers/Stock/warehouse.router'
@@ -17,5 +17,5 @@ app.use('/batches', BatchRouter)
 app.use('/stock',StockRouter)
 
 app.listen(5000, () => {
-    console.log("server running on " + 5000)
+    console.log("server running on port 5000")
 })
