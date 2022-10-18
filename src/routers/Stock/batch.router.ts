@@ -19,8 +19,8 @@ router.post("/", async (req: Request, res: Response) => {
         });
         res.send(batch);
     } catch (error) {
-        console.log({error});
-        
+        console.log({ error });
+
         res.status(500).send(error)
     }
 });
@@ -32,8 +32,8 @@ router.get("/", async (req: Request, res: Response) => {
                 where: {
                     status: 'active',
                 },
-                orderBy:{
-                    productId:'asc'
+                orderBy: {
+                    productId: 'asc'
                 }
             }
         );
@@ -43,19 +43,37 @@ router.get("/", async (req: Request, res: Response) => {
     }
 });
 
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/byid/:id", async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        const batches = await prisma.batchNo.findMany(
-            {
-                where: {
-                    productId:id,
-                    status: 'active',
+            const batches = await prisma.batchNo.findMany(
+                {
+                    where: {
+                        productId: id,
+                        status: 'active',
+                    }
                 }
-            }
-        );
-        res.send(batches);
-    } catch (error) {
+            ); 
+            res.send(batches);
+
+        }catch (error) {
+        res.status(500).send(error)
+    }
+});
+
+router.get("/batchno/:batchNo", async (req: Request, res: Response) => {
+    try {
+        const batchNo = req.params.batchNo;
+            const batches = await prisma.batchNo.findUnique(
+                {
+                    where: {
+                        batchNo:batchNo
+                    }
+                }
+            ); 
+            res.send(batches);
+
+        }catch (error) {
         res.status(500).send(error)
     }
 });
