@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { productId,warehouseID, batchNo, quantity, buyingPrice, sellingPrice } = req.body;
+        
         const stock = await prisma.stock.create({
             data: {
                 productId: productId,
