@@ -9,7 +9,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-//------------------------------------------------------------Senith Start----------------------------------------------
+
 model batchNo{
   id Int @id @default(autoincrement())
   product product @relation(fields: [productId], references: [productId])
@@ -90,4 +90,14 @@ model warehouse{
   
 }
 
-//---------------------------senith end----------------------------------------------
+model customer {
+  id Int @id @default(autoincrement())
+  customer_id String @db.VarChar(20) @unique
+  name String @db.VarChar(50)
+  email String @db.VarChar(120) 
+  mobile Int @db.Int
+  loyalty_points Int @db.Int @default(0)
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
