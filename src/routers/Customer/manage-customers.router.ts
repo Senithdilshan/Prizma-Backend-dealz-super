@@ -5,10 +5,9 @@ const router = Router()
 const prisma = new PrismaClient();
  
 /* CRUD - Create */
-const ranId = '' + Math.floor(Date.now() / 1000) + Math.floor(1000 + Math.random() * 9000); 
-
 router.post("/", async (req: Request, res: Response) => {
     try {
+        const ranId = '' + Math.floor(Date.now() / 1000) + Math.floor(1000 + Math.random() * 9000);
         const { customer_id, name, mobile, loyalty_points, email } = req.body;
         const customer = await prisma.customer.create({
             data: {
