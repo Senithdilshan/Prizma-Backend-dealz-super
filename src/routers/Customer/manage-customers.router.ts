@@ -5,12 +5,14 @@ const router = Router()
 const prisma = new PrismaClient();
  
 /* CRUD - Create */
+const ranId = '' + Math.floor(Date.now() / 1000) + Math.floor(1000 + Math.random() * 9000); 
+
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { customer_id, name, mobile, loyalty_points, email } = req.body;
         const customer = await prisma.customer.create({
             data: {
-                customer_id: customer_id,
+                customer_id: ranId,
                 name: name,
                 mobile: Number(mobile),
                 loyalty_points: Number(loyalty_points),
@@ -42,7 +44,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 /* CRUD - Update */
-router.put("/", async (req: Request, res: Response) => {
+router.put("/updateCustomer/:customer_id", async (req: Request, res: Response) => {
     try {
         const {  customer_id, name, mobile, loyalty_points, email} = req.body;
         const updatecustomer = await prisma.customer.update({
