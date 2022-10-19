@@ -5,7 +5,7 @@ import ProductRouter from './routers/Stock/product.router'
 import WarehouseRouter from './routers/Stock/warehouse.router'
 import BatchRouter from './routers/Stock/batch.router'
 import StockRouter from './routers/Stock/stock.router'
-import CustomerRouter from './routers/Stock/manage-customers.router';
+import CustomerRouter from './routers/Customer/manage-customers.router';
 
 const app = express()
 app.use(cors())
