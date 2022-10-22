@@ -3,6 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const router = Router()
 const prisma = new PrismaClient();
 
+import * as nodemailer from 'nodemailer'
+
+
+
+
+
+
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { productId,warehouseID, batchNo, quantity, buyingPrice, sellingPrice } = req.body;
@@ -18,6 +25,24 @@ router.post("/", async (req: Request, res: Response) => {
             },
         });
         res.send(stock);
+
+
+        const transporter =nodemailer.createTransport({
+            service:'gmail',
+            auth:{
+                user:'dealzsuperproject@gmail.com',
+                pass:'dhckxzrbdmyecjmb'
+            }
+
+        })
+
+        transporter.sendMail({
+            from:'dealzsuperproject@gmail.com',
+            to:'amsenith.dilshan@gmail.com',
+            subject:productId,
+            text:'Product added to stock Sucessfully , Quantity='+quantity,
+        })
+
     } catch (error) {
         console.log({error});
         
