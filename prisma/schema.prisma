@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
@@ -95,9 +95,10 @@ model customer {
   customer_id String @db.VarChar(20) @unique
   name String @db.VarChar(50)
   email String @db.VarChar(120) 
-  mobile Int @db.Int
+  mobile String @db.VarChar(14)
   loyalty_points Int @db.Int @default(0)
   status String @db.VarChar(10) @default("active")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
 }
