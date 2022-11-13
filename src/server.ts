@@ -11,6 +11,7 @@ import SupplierRouter from './routers/Supplier/supplier.router' ;
 const app = express()
 app.use(cors())
 app.use(express.json());
+app.use(express.static('uploads'));
 const prisma =new PrismaClient();
 
 app.use('/product', ProductRouter)
