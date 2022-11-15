@@ -5,7 +5,7 @@ import ProductRouter from './routers/Stock/product.router'
 import WarehouseRouter from './routers/Stock/warehouse.router'
 import BatchRouter from './routers/Stock/batch.router'
 import StockRouter from './routers/Stock/stock.router'
-import CustomerRouter from './routers/Customer/manage-customers.router';
+// import CustomerRouter from './routers/Customer/manage-customers.router';
 import SupplierRouter from './routers/Supplier/supplier.router' ;
 import BankRouter from './routers/Bank/bank.router' ;
 import SupplierPaymentRouter from './routers/Supplier/supplierpayment.router' ;
@@ -20,7 +20,7 @@ app.use('/product', ProductRouter)
 app.use('/warehouse', WarehouseRouter)
 app.use('/batches', BatchRouter)
 app.use('/stock',StockRouter)
-app.use('/manage-customers',CustomerRouter)
+// app.use('/manage-customers',CustomerRouter)
 app.use('/supplier', SupplierRouter)
 app.use('/bank' , BankRouter)
 app.use('/supplier_payments' , SupplierPaymentRouter)
