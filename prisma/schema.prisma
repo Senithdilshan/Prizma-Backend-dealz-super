@@ -106,11 +106,31 @@ model customer {
 model supplier{
   id Int @id @default(autoincrement())
   supplierId String @db.VarChar(20) @unique
-  supplierName String @db.VarChar(150)
+  supplierName String @db.VarChar(150) 
   supplierAddress String @db.VarChar(150)
   supplierContactNumber String @db.VarChar(20)
   outstandingAmount Float @db.Float @default(0)
   status String @db.VarChar(10) @default("active")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@unique([supplierId, supplierName])
+  payments supplier_payments[]
+}
+
+model bank{
+  id Int @id @default(autoincrement())
+  accountNumber String @db.VarChar(30) @unique
+  accountName String @db.VarChar(50) 
+  bankName String @db.VarChar(50) 
+  branchName String @db.VarChar(50) 
+}
+
+model supplier_payments {
+  id Int @id @default(autoincrement())
+  paymentId String @db.VarChar(10) @unique 
+  supplier supplier @relation( fields: [supplierId , supplierName] , references: [supplierId , supplierName])
+  supplierId String @db.VarChar(20)
+  supplierName String @db.VarChar(30)
+  paymentDescription String @db.VarChar(50) 
+  paymentAmount Float
 }
