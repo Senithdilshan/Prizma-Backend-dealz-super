@@ -24,30 +24,31 @@ model batchNo{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   stocks Stock[]
-  // grns GRN[]
+  grns GRN[]
 }
-// model GRN{
-//   id Int @id @default(autoincrement())
-//   grnID String @db.VarChar(20) @unique
+model GRN{
+  id Int @id @default(autoincrement())
+  grnID String @db.VarChar(20) @unique
 
-//   product product @relation(fields: [productId], references: [productId])
-//   productId String @db.VarChar(20)
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
 
-//   warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
-//   warehouseID String @db.VarChar(20)
+  warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
+  warehouseID String @db.VarChar(20)
 
-//   // suppiler Supplier @relation(fields: [supplierID], references: [supplierID])
-//   // supplierID String @db.VarChar(20)
+  supplier supplier @relation(fields: [supplierID], references: [supplierId])
+  supplierID String @db.VarChar(20)
 
-//   batch batchNo @relation(fields: [batchNo], references: [batchNo])
-//   batchNo String @db.VarChar(255)
+  batch batchNo @relation(fields: [batchNo], references: [batchNo])
+  batchNo String @db.VarChar(255)
 
-//   quantity Int
-//   totalBuyingPrice Float
-//   status String @db.VarChar(10) @default("active")
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+  quantity Int
+  totalBuyingPrice Float
+
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Stock{
   id Int @id @default(autoincrement())
@@ -74,7 +75,7 @@ model product{
   status String @db.VarChar(10) @default("active")
   updatedAt DateTime @updatedAt
   batches batchNo[]
-  // grns GRN[]
+  grns GRN[]
   stocks Stock[]
 }
 
@@ -85,7 +86,7 @@ model warehouse{
   createdAt DateTime @default(now())
   status String @db.VarChar(10) @default("active")
   updatedAt DateTime @updatedAt
-  // grns GRN[]
+  grns GRN[]
   stocks Stock[]
   
 }
@@ -115,6 +116,7 @@ model supplier{
   updatedAt DateTime @updatedAt
   @@unique([supplierId, supplierName])
   payments supplier_payments[]
+  grns GRN[]
 }
 
 model bank{
