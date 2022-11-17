@@ -3,12 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const router = Router()
 const prisma = new PrismaClient();
 
-
-
-
-
-
-
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { grnID,productId,warehouseID,supplierID,batchNo, quantity, totalBuyingPrice} = req.body;
