@@ -50,6 +50,49 @@ router.post("/", async (req: Request, res: Response) => {
     }
 });
 
+
+router.get("/loadstock", async (req: Request, res: Response) => {
+    try {
+        const stockload = await prisma.stock.findFirst(
+            {
+                where: {
+                    status: 'active',
+                },
+                orderBy:{
+                    id:'desc',
+                },
+                take:1,
+            }
+        );
+        res.send(stockload);
+    } catch (error) {
+        console.log(error);
+        
+        res.status(500).send(error)
+    }
+});
+
+router.get("/outofstock", async (req: Request, res: Response) => {
+    try {
+        const stocks = await prisma.stock.findMany(
+            {
+                where: {
+                    status: 'active',
+                    quantity:{
+                        lt:20,
+                    }
+                },
+                orderBy:{
+                    productId:'asc'
+                }
+            }
+        );
+        res.send(stocks);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+
 router.get("/", async (req: Request, res: Response) => {
     try {
         const stocks = await prisma.stock.findMany(
@@ -67,6 +110,8 @@ router.get("/", async (req: Request, res: Response) => {
         res.status(500).send(error)
     }
 });
+
+
 
 router.put("/", async (req: Request, res: Response) => {
     try {

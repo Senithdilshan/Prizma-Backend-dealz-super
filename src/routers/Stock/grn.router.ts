@@ -35,7 +35,7 @@ router.get("/", async (req: Request, res: Response) => {
                     status: 'active',
                 },
                 orderBy:{
-                    productId:'asc'
+                    grnID:'asc'
                 }
             }
         );
