@@ -10,6 +10,7 @@ import GrnRouter from './routers/Stock/grn.router'
 import SupplierRouter from './routers/Supplier/supplier.router' ;
 import BankRouter from './routers/Bank/bank.router' ;
 import SupplierPaymentRouter from './routers/Supplier/supplierpayment.router' ;
+import UserRouter from './routers/User/user.router' ;
 
 const app = express()
 app.use(cors())
@@ -26,6 +27,7 @@ app.use('/grn',GrnRouter)
 app.use('/supplier', SupplierRouter)
 app.use('/bank' , BankRouter)
 app.use('/supplier_payments' , SupplierPaymentRouter)
+app.use('/user',UserRouter)
 
 app.listen(5000, () => {
     console.log("server running on port 5000")

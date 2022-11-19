@@ -136,3 +136,19 @@ model supplier_payments {
   paymentDescription String @db.VarChar(50) 
   paymentAmount Float
 }
+
+ model user{
+  id Int @id @default(autoincrement())
+  user_id String @db.VarChar(20) @unique
+  name String @db.VarChar(20)
+  mobileNo Int @unique
+  email String @db.VarChar(255) @unique
+  address String @db.VarChar(255)
+  userLevel Int 
+  password String @db.VarChar(300)
+  DOB DateTime
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+} 
