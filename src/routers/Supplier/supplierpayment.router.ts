@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const { paymentId , supplierId , supplierName , paymentDescription, paymentAmount } = req.body;
+        const { paymentId , supplierId , supplierName , paymentDescription, paymentAmount,accountNumber } = req.body;
         console.log(req.body);
 
         const supplier_payment = await prisma.supplier_payments.create({
@@ -16,6 +16,7 @@ router.post("/", async (req: Request, res: Response) => {
                 supplierName : supplierName ,
                 paymentDescription : paymentDescription ,
                 paymentAmount : paymentAmount,
+                accountNumber : accountNumber
             },
         });
         res.send(supplier_payment);

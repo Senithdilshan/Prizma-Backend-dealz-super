@@ -125,6 +125,7 @@ model bank{
   accountName String @db.VarChar(50) 
   bankName String @db.VarChar(50) 
   branchName String @db.VarChar(50) 
+  payments supplier_payments[]
 }
 
 model supplier_payments {
@@ -133,8 +134,10 @@ model supplier_payments {
   supplier supplier @relation( fields: [supplierId , supplierName] , references: [supplierId , supplierName])
   supplierId String @db.VarChar(20)
   supplierName String @db.VarChar(30)
-  paymentDescription String @db.VarChar(50) 
+  paymentDescription String @db.VarChar(200) 
   paymentAmount Float
+  bank bank @relation( fields: [accountNumber] , references: [accountNumber])
+  accountNumber String @db.VarChar(30)
 }
 
  model user{
