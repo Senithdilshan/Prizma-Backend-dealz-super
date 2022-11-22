@@ -13,7 +13,7 @@ export const authenticatoken = async (req: Request, res: Response, next: NextFun
     // console.log("failed");
 
     const authHeader = req.headers['authorization']
-    console.log({ authHeader });
+    // console.log({ authHeader });
     if (!authHeader) return res.sendStatus(401)
     const token = authHeader.split(' ')[1]
     // const token=authHeader.slice(7);
@@ -25,7 +25,7 @@ export const authenticatoken = async (req: Request, res: Response, next: NextFun
             console.log('JWT Error');
             return res.sendStatus(403);
         }
-        console.log(user);
+        // console.log(user);
         
         next();
     });

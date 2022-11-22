@@ -93,6 +93,28 @@ router.get("/outofstock", async (req: Request, res: Response) => {
     }
 });
 
+router.get("/search", async (req: Request, res: Response) => {
+    try {
+        const {productId}=req.body;
+        const stocks = await prisma.stock.findMany(
+            {
+                where: {
+                    status: 'active',
+                    productId:{
+                        startsWith:productId,
+                    },
+                },
+                orderBy:{
+                    productId:'asc'
+                }
+            }
+        );
+        res.send(stocks);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+
 router.get("/", async (req: Request, res: Response) => {
     try {
         const stocks = await prisma.stock.findMany(
@@ -124,7 +146,8 @@ router.put("/", async (req: Request, res: Response) => {
             data: {
                 batchNo:batchNo,
                 warehouseID:warehouseID,
-                quantity: Number(quantity),
+                quantity:{
+                    increment:Number(quantity)},
             }
         });
         res.send(updatestock);

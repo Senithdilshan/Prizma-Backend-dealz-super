@@ -45,6 +45,27 @@ router.get("/", async (req: Request, res: Response) => {
     }
 });
 
+router.get("/expired", async (req: Request, res: Response) => {
+    try {
+        const batches = await prisma.batchNo.findMany(
+            {
+                where: {
+                    status: 'active',
+                    exDate:{
+                        lte:new Date(), 
+                    },
+                },
+                orderBy: {
+                    productId: 'asc'
+                }
+            }
+        );
+        res.send(batches);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+
 router.get("/byid/:id", async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
