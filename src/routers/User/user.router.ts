@@ -11,7 +11,7 @@ const router = Router()
 const prisma = new PrismaClient();
 //create user
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/",authenticatoken,async (req: Request, res: Response) => {
     try {
         const { user_id, name, mobileNo, email, address, userLevel, password, DOB } = req.body;
         // console.log(req.body);
