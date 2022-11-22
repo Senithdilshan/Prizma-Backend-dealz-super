@@ -1,9 +1,21 @@
 import express, { Request, Response, Router } from 'express'
 import { PrismaClient } from "@prisma/client";
+import * as jwt from 'jsonwebtoken'
 const router = Router()
 const prisma = new PrismaClient();
+import {authenticatoken} from '../../helper'
 
-router.post("/", async (req: Request, res: Response) => {
+// router.use((req, res, next) => {
+//     //check if the access token is valid and non expired
+//     if(true){
+//         next()
+//     } else {
+//         res.status(403).send()
+//     }
+// })
+router.use(authenticatoken)
+
+router.post("/",async (req: Request, res: Response) => {
     try {
         const { productId, barcode, productName } = req.body;
         console.log(req.body);

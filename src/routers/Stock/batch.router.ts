@@ -1,8 +1,10 @@
 import express, { Request, Response, Router } from 'express'
 import { PrismaClient } from "@prisma/client";
+import { authenticatoken } from '../../helper';
 const router = Router()
 const prisma = new PrismaClient();
 
+router.use(authenticatoken)
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { productId, batchNo, ManufacturerBNo, mfDate, exDate, buyingPrice, sellingPrice } = req.body;

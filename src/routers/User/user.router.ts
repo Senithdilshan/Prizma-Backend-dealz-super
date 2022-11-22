@@ -1,11 +1,16 @@
 import express, { Request, Response, Router } from 'express'
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from 'bcrypt'
+import { DotenvConfigOptions } from 'dotenv';
+
+import * as jwt from 'jsonwebtoken'
+import { authenticatoken } from '../../helper';
+
 
 const router = Router()
 const prisma = new PrismaClient();
-
 //create user
+
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { user_id, name, mobileNo, email, address, userLevel, password, DOB } = req.body;
@@ -37,9 +42,13 @@ router.post("/", async (req: Request, res: Response) => {
 //to get user
 
 
-router.post("/password", async (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
+    // console.log(req.body);
+    
     try {
-        const { email, password } = req.body;
+        const { email,password } = req.body;
+        // console.log({email,password});
+        
         const useremail = await prisma.user.findFirst(
             {
                 where: {
@@ -52,11 +61,20 @@ router.post("/password", async (req: Request, res: Response) => {
             }
         );
 
+        if (!useremail) throw new Error('Authentication Failed')
         const hash = useremail.password;
         const hashpass = bcrypt.compareSync(password, hash)
-        console.log(hashpass);
+        // console.log(hashpass);
         if (hashpass) {
-            res.send(useremail);
+            const accessToken = jwt.sign({
+                userId: useremail.id,
+                userLevel: useremail.userLevel,
+            }, process.env.JWT_PRIVATE_KEY)
+            res.send({
+                accessToken: accessToken,
+                level:useremail.userLevel
+            });
+            
         }else{
             // error=new Error('Wrong Password')
             throw new Error('Wrong Password')
@@ -64,10 +82,12 @@ router.post("/password", async (req: Request, res: Response) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
     }
 
 });
+
+
 
 router.get("/", async (req: Request, res: Response) => {
     try {

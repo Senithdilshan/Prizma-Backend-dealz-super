@@ -2,13 +2,13 @@ import express, { Request, Response, Router } from 'express'
 import { PrismaClient } from "@prisma/client";
 const router = Router()
 const prisma = new PrismaClient();
-
+import { authenticatoken } from '../../helper';
 import * as nodemailer from 'nodemailer'
 
 
 
 
-
+router.use(authenticatoken)
 
 router.post("/", async (req: Request, res: Response) => {
     try {
@@ -115,18 +115,16 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.put("/", async (req: Request, res: Response) => {
     try {
-        const {  productId,warehouseID, batchNo, quantity, buyingPrice, sellingPrice} = req.body;
+        const { batchNo,warehouseID, quantity} = req.body;
         const updatestock = await prisma.stock.update({
             where: {
                 batchNo:batchNo
                 
             },
             data: {
-                warehouseID:warehouseID,
                 batchNo:batchNo,
+                warehouseID:warehouseID,
                 quantity: Number(quantity),
-                buyingPrice: Number(buyingPrice),
-                sellingPrice: Number(sellingPrice),
             }
         });
         res.send(updatestock);
