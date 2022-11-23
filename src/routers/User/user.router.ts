@@ -115,6 +115,8 @@ router.put("/", async (req: Request, res: Response) => {
     try {
         const { user_id, name, mobileNo, email, address, userLevel, password, DOB } = req.body;
         console.log(req.body);
+        const salt = await bcrypt.genSalt();
+        const hashpass = bcrypt.hashSync(password, salt);
 
         const updateUser = await prisma.user.update({
             where: {
@@ -122,11 +124,11 @@ router.put("/", async (req: Request, res: Response) => {
             },
             data: {
                 name: name,
-                mobileNo: mobileNo,
+                mobileNo: Number(mobileNo),
                 email: email,
                 address: address,
-                userLevel: userLevel,
-                password: password,
+                userLevel: Number(userLevel),
+                password: hashpass,
                 DOB: new Date(DOB),
             }
         });
