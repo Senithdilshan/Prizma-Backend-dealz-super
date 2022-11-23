@@ -39,8 +39,6 @@ router.post("/",authenticatoken,async (req: Request, res: Response) => {
 
 });
 
-//to get user
-
 
 router.post("/login", async (req: Request, res: Response) => {
     // console.log(req.body);
@@ -155,6 +153,23 @@ router.delete("/:user_id", async (req: Request, res: Response) => {
             }
         });
         res.send(deleteUser);
+    } catch (error) {
+        res.status(500).send(error)
+        console.log(error);
+
+    }
+
+});
+
+router.post("/userlog", async (req: Request, res: Response) => {
+    try {
+        const {email} = req.body;
+        const userlog = await prisma.userlog.create({
+            data: {
+                email: email,
+            },
+        });
+        res.send(userlog);
     } catch (error) {
         res.status(500).send(error)
         console.log(error);

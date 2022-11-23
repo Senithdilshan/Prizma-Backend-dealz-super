@@ -15,7 +15,7 @@ router.post("/", async (req: Request, res: Response) => {
                 supplierName : supplierName,
                 supplierAddress : supplierAddress,
                 supplierContactNumber : supplierContactNumber,
-                outstandingAmount : outstandingAmount,
+                outstandingAmount : Number(outstandingAmount),
             },
         });
         res.send(supplier);
@@ -106,17 +106,18 @@ router.put("/addoutstanding/" , async (req : Request , res: Response) => {
     }
 })
 
-router.put("/updateoutstanding/:supplierId" , async (req : Request , res: Response) => {
+router.put("/updateoutstanding/" , async (req : Request , res: Response) => {
     try {
-        const supplierId = req.params.supplierId ;
-        const {outstandingAmount } = req.body;
+        const {supplierId , paymentAmount } = req.body;
+        console.log(supplierId);
+        console.log(paymentAmount);
         const updateoutstanding = await prisma.supplier.update({
             where: {
                 supplierId : supplierId
             },
             data:{
                 outstandingAmount: {
-                    decrement: outstandingAmount ,
+                    decrement: Number(paymentAmount)
                   }
             } 
         });

@@ -16,8 +16,7 @@ router.post("/", async (req: Request, res: Response) => {
                 supplierName : supplierName ,
                 paymentDescription : paymentDescription ,
                 paymentAmount : paymentAmount,
-                
-                // accountNumber : accountNumber
+                accountNumber : accountNumber
             },
         });
         res.send(supplier_payment);
