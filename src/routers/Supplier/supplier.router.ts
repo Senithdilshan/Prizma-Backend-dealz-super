@@ -85,19 +85,20 @@ router.delete("/:supplierId", async (req: Request, res: Response) => {
    
 });
 
-router.put("/addoutstanding/:supplierId" , async (req : Request , res: Response) => {
+router.put("/addoutstanding/" , async (req : Request , res: Response) => {
     try {
-        const supplierId = req.params.supplierId ;
-        const {outstandingAmount } = req.body;
+        const {supplierID,totalBuyingPrice} = req.body;
+        console.log(supplierID);
+        console.log(totalBuyingPrice);
         const addoutstanding = await prisma.supplier.update({
             where: {
-                supplierId : supplierId
+                supplierId:supplierID
             },
             data:{
-                outstandingAmount: {
-                    increment: outstandingAmount ,
-                  }
-            } 
+                outstandingAmount:{
+                    increment:Number(totalBuyingPrice)
+                }
+            },
         });
         res.send(addoutstanding);
     }catch (error) {
