@@ -1,12 +1,15 @@
 import { Request, Response, Router } from 'express';
 import { PrismaClient } from "@prisma/client";
+import { authenticatoken } from '../../helper';
 
 const router = Router()
 const prisma = new PrismaClient();
+router.use(authenticatoken)
+
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const { supplierId, supplierName , supplierAddress , supplierContactNumber , outstandingAmount } = req.body;
+        const { supplierId, supplierName , supplierAddress , supplierContactNumber  } = req.body;
         console.log(req.body);
 
         const supplier = await prisma.supplier.create({
@@ -15,12 +18,12 @@ router.post("/", async (req: Request, res: Response) => {
                 supplierName : supplierName,
                 supplierAddress : supplierAddress,
                 supplierContactNumber : supplierContactNumber,
-                outstandingAmount : Number(outstandingAmount),
             },
         });
         res.send(supplier);
     } catch (error) {
         res.status(500).send(error)
+        console.log(error)
     }
 
 });

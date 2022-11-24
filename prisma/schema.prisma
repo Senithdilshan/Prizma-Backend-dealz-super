@@ -138,6 +138,7 @@ model supplier_payments {
   paymentAmount Float
   bank bank @relation( fields: [accountNumber] , references: [accountNumber])
   accountNumber String @db.VarChar(30)
+  createdAt DateTime @default(now())
 }
 
  model user{
