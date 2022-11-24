@@ -55,6 +55,26 @@ router.get("/", async (req: Request, res: Response) => {
 
 });
 
+router.post("/setproduct", async (req: Request, res: Response) => {
+    const { searchfield} = req.body;
+    try {
+        const products = await prisma.product.findFirst(
+            {
+                where: {
+                    status: 'active',
+                    barcode:searchfield,
+                },
+                
+            }
+        );
+        res.send(products);
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+
+});
+
 router.put("/", async (req: Request, res: Response) => {
     try {
         const { productId, barcode, productName } = req.body;

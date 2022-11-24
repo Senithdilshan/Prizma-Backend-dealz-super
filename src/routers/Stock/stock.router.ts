@@ -115,6 +115,22 @@ router.get("/search", async (req: Request, res: Response) => {
     }
 });
 
+router.post("/setproduct:pid", async (req: Request, res: Response) => {
+    const productId=req.params.pid;
+    try {
+        const stocks = await prisma.stock.findFirst(
+            {
+                where: {
+                    status: 'active',
+                    productId:productId,
+                },
+            }
+        );
+        res.send(stocks);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
 router.get("/", async (req: Request, res: Response) => {
     try {
         const stocks = await prisma.stock.findMany(
