@@ -108,6 +108,30 @@ router.get("/", async (req: Request, res: Response) => {
 
 });
 
+router.get("/byemail", async (req: Request, res: Response) => {
+    try {
+        const {email} = req.body ;
+        console.log(req.body)
+        const user = await prisma.user.findFirst(
+            {
+                where: {
+                    status: 'active',
+                    email : email,
+                },
+                orderBy: {
+                    user_id: 'asc'
+                }
+
+            }
+        );
+        res.send(user);
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+
+});
+
 //update the user
 router.put("/", async (req: Request, res: Response) => {
     try {
@@ -163,17 +187,46 @@ router.delete("/:user_id", async (req: Request, res: Response) => {
 
 router.post("/userlog", async (req: Request, res: Response) => {
     try {
-        const {email} = req.body;
+        const {user_id , name , userLevel , email } = req.body;
+        console.log(req.body) ;
         const userlog = await prisma.userlog.create({
-            data: {
-                email: email,
-            },
+           data:{
+            user_id : user_id,
+            name : name,
+            userLevel : userLevel,
+            email:email,
+           }
         });
         res.send(userlog);
     } catch (error) {
         res.status(500).send(error)
         console.log(error);
 
+    }
+
+});
+
+router.post("/bydate", async (req: Request, res: Response) => {
+    try {
+        const {startDate , endDate } = req.body;
+        // console.log(req.body) ;
+        const userlog = await prisma.userlog.findMany(
+            {
+                where : {
+                    logTime : {
+                        lte : new Date(endDate),
+                        gte : new Date(startDate),
+                    },
+                },
+                orderBy: {
+                    logTime : 'desc'
+                }
+            }
+        );
+        res.send(userlog);
+
+    } catch (error) {
+        res.status(500).send(error)
     }
 
 });

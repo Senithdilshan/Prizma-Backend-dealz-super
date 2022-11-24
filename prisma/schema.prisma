@@ -159,6 +159,9 @@ model supplier_payments {
 
 model userlog{
   id Int @id @default(autoincrement())
+  user_id String @db.VarChar(20)
+  name String @db.VarChar(20)
+  userLevel Int 
   email String @db.VarChar(255) 
   logTime DateTime @default(now())
 }
