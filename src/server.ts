@@ -12,6 +12,7 @@ import BankRouter from './routers/Bank/bank.router' ;
 import SupplierPaymentRouter from './routers/Supplier/supplierpayment.router' ;
 import UserRouter from './routers/User/user.router' ;
 import UserReviewRouter from './routers/User/userreview.router'
+import UserLeaveNote from './routers/User/userleavenote.router'
 
 
 const app = express()
@@ -31,6 +32,7 @@ app.use('/bank' , BankRouter)
 app.use('/supplier_payments' , SupplierPaymentRouter)
 app.use('/user',UserRouter)
 app.use('/userreview', UserReviewRouter)
+app.use('/leavenote' , UserLeaveNote )
 
 app.listen(5000, () => {
     console.log("server running on port 5000")
