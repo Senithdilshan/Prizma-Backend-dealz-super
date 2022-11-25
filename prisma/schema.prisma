@@ -154,14 +154,28 @@ model supplier_payments {
   status String @db.VarChar(10) @default("active")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  @@unique([user_id, email])
+  userlog userlog[]
+  userreview userreview[]
 } 
 
 model userlog{
   id Int @id @default(autoincrement())
+  user user @relation ( fields: [user_id , email] , references: [user_id , email])
   user_id String @db.VarChar(20)
   name String @db.VarChar(20)
   userLevel Int 
   email String @db.VarChar(255) 
   logTime DateTime @default(now())
+}
+
+model userreview{
+  id Int @id @default(autoincrement())
+  user user @relation ( fields: [user_id , email] , references: [user_id , email])
+  user_id String @db.VarChar(20)
+  name String @db.VarChar(20)
+  email String @db.VarChar(255) 
+  rating Int
+  description String @db.VarChar(1000) 
+  createdAt DateTime @default(now())
 }

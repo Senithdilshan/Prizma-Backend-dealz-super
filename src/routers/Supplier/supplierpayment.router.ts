@@ -4,7 +4,7 @@ import { authenticatoken } from '../../helper';
 
 const router = Router()
 const prisma = new PrismaClient();
-// router.use(authenticatoken)
+router.use(authenticatoken)
 
 router.post("/", async (req: Request, res: Response) => {
     try {

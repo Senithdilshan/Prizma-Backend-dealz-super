@@ -231,5 +231,22 @@ router.post("/bydate", async (req: Request, res: Response) => {
 
 });
 
+router.get("/byid/:user_id", async (req: Request, res: Response) => {
+    try {
+        console.log(req.params.user_id) ;
+        const user_id = req.params.user_id;
+            const user = await prisma.user.findUnique(
+                {
+                    where: {
+                        user_id : user_id
+                    }
+                }
+            ); 
+            res.send(user);
+
+        }catch (error) {
+        res.status(500).send(error)
+    }
+});
 
 export default router
