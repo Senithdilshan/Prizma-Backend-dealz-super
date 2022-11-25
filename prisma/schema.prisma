@@ -111,10 +111,11 @@ model supplier{
   supplierAddress String @db.VarChar(150)
   supplierContactNumber String @db.VarChar(20)
   outstandingAmount Float @db.Float @default(0)
+  supplierEmail String @db.VarChar(255) @unique
   status String @db.VarChar(10) @default("active")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@unique([supplierId, supplierName])
+  @@unique([supplierId, supplierName , supplierEmail])
   payments supplier_payments[]
   grns GRN[]
 }
@@ -131,9 +132,10 @@ model bank{
 model supplier_payments {
   id Int @id @default(autoincrement())
   paymentId String @db.VarChar(10) @unique 
-  supplier supplier @relation( fields: [supplierId , supplierName] , references: [supplierId , supplierName])
+  supplier supplier @relation( fields: [supplierId , supplierName , supplierEmail] , references: [supplierId , supplierName , supplierEmail])
   supplierId String @db.VarChar(20)
   supplierName String @db.VarChar(30)
+  supplierEmail String @db.VarChar(255)
   paymentDescription String @db.VarChar(200) 
   paymentAmount Float
   bank bank @relation( fields: [accountNumber] , references: [accountNumber])

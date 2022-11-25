@@ -9,13 +9,14 @@ router.use(authenticatoken)
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const { supplierId, supplierName , supplierAddress , supplierContactNumber  } = req.body;
+        const { supplierId, supplierName, supplierEmail , supplierAddress , supplierContactNumber  } = req.body;
         console.log(req.body);
 
         const supplier = await prisma.supplier.create({
             data: {
                 supplierId : supplierId ,
                 supplierName : supplierName,
+                supplierEmail : supplierEmail,
                 supplierAddress : supplierAddress,
                 supplierContactNumber : supplierContactNumber,
             },
@@ -51,13 +52,14 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.put("/", async (req: Request, res: Response) => {
     try {
-        const { supplierId, supplierName, supplierAddress , supplierContactNumber } = req.body;
+        const { supplierId, supplierName, supplierEmail, supplierAddress , supplierContactNumber } = req.body;
     const updateSupplier = await prisma.supplier.update({
         where: {
             supplierId: supplierId
         },
         data: {
             supplierName : supplierName,
+            supplierEmail : supplierEmail,
             supplierAddress : supplierAddress,
             supplierContactNumber : supplierContactNumber,
         },
@@ -129,5 +131,23 @@ router.put("/updateoutstanding/" , async (req : Request , res: Response) => {
         res.status(500).send(error)
     }
 })
+
+router.get("/byid/:supplierId", async (req: Request, res: Response) => {
+    try {
+        console.log(req.params.supplierId) ;
+        const supplierId = req.params.supplierId;
+            const supplier = await prisma.supplier.findUnique(
+                {
+                    where: {
+                        supplierId : supplierId
+                    }
+                }
+            ); 
+            res.send(supplier);
+
+        }catch (error) {
+        res.status(500).send(error)
+    }
+});
 
 export default router ;

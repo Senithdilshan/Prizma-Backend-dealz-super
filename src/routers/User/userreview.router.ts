@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
 import { PrismaClient } from "@prisma/client";
 import { authenticatoken } from '../../helper';
+import * as nodemailer from 'nodemailer'
 
 const router = Router()
 const prisma = new PrismaClient();
-//router.use(authenticatoken)
+router.use(authenticatoken)
 
 router.post("/", async (req: Request, res: Response) => {
     try {
@@ -21,6 +22,23 @@ router.post("/", async (req: Request, res: Response) => {
             },
         });
         res.send(userreview);
+
+        const transporter =nodemailer.createTransport({
+            service:'gmail',
+            auth:{
+                user:'dealzsuperproject@gmail.com',
+                pass:'rwsnwviflkvrpkfi'
+            }
+
+        })
+
+        transporter.sendMail({
+            from:'dealzsuperproject@gmail.com',
+            to: email,
+            subject: 'Monthly review for '+name+' from DealzSuper',
+            text:'Dear '+name+ ' Your Monthly Rating is '+rating+ '. Following is the comment from the Owner : '+description ,
+        })
+
     } catch (error) {
         res.status(500).send(error)
     }
