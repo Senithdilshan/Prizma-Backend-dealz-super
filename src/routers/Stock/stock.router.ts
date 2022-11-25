@@ -31,7 +31,7 @@ router.post("/", async (req: Request, res: Response) => {
             service:'gmail',
             auth:{
                 user:'dealzsuperproject@gmail.com',
-                pass:'dhckxzrbdmyecjmb'
+                pass:'rwsnwviflkvrpkfi'
             }
 
         })
