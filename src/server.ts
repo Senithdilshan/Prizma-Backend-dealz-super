@@ -38,6 +38,6 @@ app.use('/leavenote' , UserLeaveNote )
 app.use('/supplierrequestnote' , SupplierRequestNote)
 app.use('/sale' , SaleRouter)
 
-app.listen(5000, () => {
-    console.log("server running on port 5000")
+app.listen(process.env.PORT, () => {
+    console.log(`server running on port ${process.env.PORT}`)
 })
