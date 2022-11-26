@@ -54,8 +54,8 @@ router.get("/", async (req: Request, res: Response) => {
 
 });
 
-router.post("/setproduct", async (req: Request, res: Response) => {
-    const { searchfield} = req.body;
+router.get("/setproduct/:bcode", async (req: Request, res: Response) => {
+    const searchfield = req.params.bcode;
     try {
         const products = await prisma.product.findFirst(
             {
