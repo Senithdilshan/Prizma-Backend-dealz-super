@@ -77,6 +77,8 @@ model product{
   batches batchNo[]
   grns GRN[]
   stocks Stock[]
+  //@@unique([productId, productName])
+  requestnote requestnote[]
 }
 
 model warehouse{
@@ -118,6 +120,7 @@ model supplier{
   @@unique([supplierId, supplierName , supplierEmail])
   payments supplier_payments[]
   grns GRN[]
+  requestnote requestnote[]
 }
 
 model bank{
@@ -193,3 +196,43 @@ model leavenote{
   reason String @db.VarChar(255)
   createdAt DateTime @default(now())
 }
+
+model requestnote{
+  id Int @id @default(autoincrement())
+  requestId String @db.VarChar(20) @unique
+  supplier supplier @relation( fields: [supplierId , supplierName , supplierEmail] , references: [supplierId , supplierName , supplierEmail])
+  supplierId String @db.VarChar(20)
+  supplierName String @db.VarChar(30)
+  supplierEmail String @db.VarChar(255)
+  product product @relation ( fields : [productId] , references: [productId])
+  productId String @db.VarChar(20) 
+  productName String @db.VarChar(150)
+  quantity Int
+  date String @db.VarChar(30)
+  createdAt DateTime @default(now())
+}
+
+model sale{
+  saleId Int @id @default(autoincrement())
+  customerId Int
+  productId String @db.VarChar(20)
+  quantity Int
+  price Float
+  netAmount Float
+  discount Float
+  totalAmount Float
+  saleDate DateTime @default(now())
+  status String @db.VarChar(10) @default("active")
+}
+
+// CREATE TABLE Sale(
+// SaleID int NOT NULL AUTO_INCREMENT,
+// CustomerID int NOT NULL,
+// ProductID int NOT NULL,
+// Quantity int NOT NULL,
+// Price decimal(10,2) NOT NULL,
+// NetAmount decimal(10,2) NOT NULL,
+// Discount decimal(10,2) NOT NULL,
+// TotalAmount decimal(10,2) NOT NULL,
+// SaleDate date NOT NULL,
+// );

@@ -18,7 +18,6 @@ router.use(authenticatoken)
 router.post("/",async (req: Request, res: Response) => {
     try {
         const { productId, barcode, productName } = req.body;
-        console.log(req.body);
 
         const product = await prisma.product.create({
             data: {
@@ -111,6 +110,23 @@ router.delete("/:productId", async (req: Request, res: Response) => {
         res.status(500).send(error)
     }
    
+});
+
+router.get("/byid/:productId", async (req: Request, res: Response) => {
+    try {
+        const productId = req.params.productId;
+            const product = await prisma.product.findUnique(
+                {
+                    where: {
+                        productId : productId
+                    }
+                }
+            ); 
+            res.send(product);
+
+        }catch (error) {
+        res.status(500).send(error)
+    }
 });
 
 

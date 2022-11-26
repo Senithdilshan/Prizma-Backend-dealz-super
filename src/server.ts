@@ -13,6 +13,8 @@ import SupplierPaymentRouter from './routers/Supplier/supplierpayment.router' ;
 import UserRouter from './routers/User/user.router' ;
 import UserReviewRouter from './routers/User/userreview.router'
 import UserLeaveNote from './routers/User/userleavenote.router'
+import SupplierRequestNote from './routers/Supplier/supplierrequestnote.router'
+import SaleRouter from './routers/Sales/sales.router'
 
 
 const app = express()
@@ -33,6 +35,8 @@ app.use('/supplier_payments' , SupplierPaymentRouter)
 app.use('/user',UserRouter)
 app.use('/userreview', UserReviewRouter)
 app.use('/leavenote' , UserLeaveNote )
+app.use('/supplierrequestnote' , SupplierRequestNote)
+app.use('/sale' , SaleRouter)
 
 app.listen(5000, () => {
     console.log("server running on port 5000")

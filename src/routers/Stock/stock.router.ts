@@ -13,7 +13,7 @@ router.use(authenticatoken)
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { productId,warehouseID, batchNo, quantity, buyingPrice, sellingPrice } = req.body;
-        
+        const total=Number(buyingPrice)*Number(quantity);
         const stock = await prisma.stock.create({
             data: {
                 productId: productId,
@@ -40,7 +40,7 @@ router.post("/", async (req: Request, res: Response) => {
             from:'dealzsuperproject@gmail.com',
             to:'amsenith.dilshan@gmail.com',
             subject:productId,
-            text:'Product added to stock Sucessfully , Quantity='+quantity,
+            text:'Product added to stock Sucessfully. \nQuantity='+quantity+'\nTotal Amount='+total ,
         })
 
     } catch (error) {

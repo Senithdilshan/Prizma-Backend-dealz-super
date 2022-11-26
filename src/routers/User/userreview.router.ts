@@ -36,7 +36,7 @@ router.post("/", async (req: Request, res: Response) => {
             from:'dealzsuperproject@gmail.com',
             to: email,
             subject: 'Monthly review for '+name+' from DealzSuper',
-            text:'Dear '+name+ ' Your Monthly Rating is '+rating+ '. Following is the comment from the Owner : '+description ,
+            text:'Dear '+name+ ',\nYour Monthly Rating is '+rating+ '.\nFollowing is the comment from the Owner : '+description+'\nThank you,\nDealz Super Management' ,
         })
 
     } catch (error) {

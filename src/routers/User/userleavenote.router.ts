@@ -36,7 +36,7 @@ router.post("/", async (req: Request, res: Response) => {
             from:'dealzsuperproject@gmail.com',
             to: 'amsenith.dilshan@gmail.com',
             subject: 'Leave note for user :'+name ,
-            text: 'User Name : '+name+' Has submitted for a leave on '+date+ ' With the following reason : ' +reason ,
+            text: 'User Name : '+name+' Has submitted for a leave on '+date+ ' \nThe Reason is as follows : ' +reason ,
         })
 
     } catch (error) {
