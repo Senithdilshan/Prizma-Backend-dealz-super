@@ -214,7 +214,7 @@ model requestnote{
 
 model sale{
   saleId Int @id @default(autoincrement())
-  customerId Int
+  customerId Int @default(0)
   productId String @db.VarChar(20)
   quantity Int
   price Float

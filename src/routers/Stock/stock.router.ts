@@ -115,8 +115,10 @@ router.get("/search", async (req: Request, res: Response) => {
     }
 });
 
-router.post("/setproduct:pid", async (req: Request, res: Response) => {
+router.get("/setproduct/:pid", async (req: Request, res: Response) => {
     const productId=req.params.pid;
+    console.log(productId);
+    
     try {
         const stocks = await prisma.stock.findFirst(
             {
@@ -131,6 +133,30 @@ router.post("/setproduct:pid", async (req: Request, res: Response) => {
         res.status(500).send(error)
     }
 });
+
+router.put("/updatequantity" , async (req : Request , res: Response) => {
+    try {
+        const {batchNo,quantity} = req.body;
+        // console.log(supplierID);
+        // console.log(totalBuyingPrice);
+        const addoutstanding = await prisma.stock.update({
+            where: {
+                batchNo:batchNo
+            },
+            data:{
+                quantity:{
+                    decrement:Number(quantity)
+                }
+            },
+        });
+        res.send(addoutstanding);
+    }catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+
 router.get("/", async (req: Request, res: Response) => {
     try {
         const stocks = await prisma.stock.findMany(
