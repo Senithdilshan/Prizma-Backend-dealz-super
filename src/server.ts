@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import * as dotenv from 'dotenv'
+dotenv.config()
 import cors from 'cors';
 import { PrismaClient } from "@prisma/client";
 import ProductRouter from './routers/Stock/product.router'
