@@ -154,6 +154,26 @@ router.put("/updatequantity" , async (req : Request , res: Response) => {
         res.status(500).send(error)
     }
 })
+router.put("/incrementquantity" , async (req : Request , res: Response) => {
+    try {
+        const {batchNo,quantity} = req.body;
+        // console.log(supplierID);
+        // console.log(totalBuyingPrice);
+        const addoutstanding = await prisma.stock.update({
+            where: {
+                batchNo:batchNo
+            },
+            data:{
+                quantity:{
+                    increment:Number(quantity)
+                }
+            },
+        });
+        res.send(addoutstanding);
+    }catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 
 
